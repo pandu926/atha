@@ -10,7 +10,7 @@ datasource db {
 model User {
   id        Int       @id @default(autoincrement())
   email     String    @unique
-  nomerhp   String?    @unique
+  nomerhp   String?   @unique
   nama      String?
   pemesanan Pemesanan[]
 }
@@ -23,18 +23,26 @@ model Admin {
 }
 
 model Pemesanan {
-  id          Int      @id @default(autoincrement())
+  id          Int               @id @default(autoincrement())
   id_pengguna Int
-  id_produk   Int
-  tanggal     DateTime @default(now())
+  tanggal     DateTime          @default(now())
   status      String
-  
-  pengguna    User     @relation(fields: [id_pengguna], references: [id])
-  produk      Produk   @relation(fields: [id_produk], references: [id])
+  keterangan  String
+  pengguna    User              @relation(fields: [id_pengguna], references: [id])
+  produk      PemesananProduk[]
 }
 
 model Produk {
-  id          Int         @id @default(autoincrement())
-  nama        String
-  pemesanan   Pemesanan[]
+  id        Int               @id @default(autoincrement())
+  nama      String
+  pemesanan PemesananProduk[]
+}
+
+model PemesananProduk {
+  id          Int       @id @default(autoincrement())
+  id_pemesanan Int
+  id_produk   Int
+  pemesanan   Pemesanan @relation(fields: [id_pemesanan], references: [id])
+  produk      Produk    @relation(fields: [id_produk], references: [id])
+  @@unique([id_pemesanan, id_produk]) // Mencegah duplikasi produk dalam satu pesanan
 }

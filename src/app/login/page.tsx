@@ -18,9 +18,9 @@ export default function Page() {
             <button className="flex items-center justify-center w-full sm:w-auto py-3 px-5 border border-gray-300 rounded-md shadow-sm text-lg font-medium text-gray-700 bg-white hover:bg-gray-50 mb-4 sm:mb-0">
               <Image
                 alt="Google logo"
+                src="/icon/google.png"
                 className="mr-3"
                 height={30}
-                src="/icon/google.png"
                 width={30}
               />
               Masuk Dengan Google

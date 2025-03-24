@@ -3,6 +3,7 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { useRouter } from "next/navigation"; // Import useRouter untuk redirect
+import Pemesanan from "../Pemesanan";
 
 interface User {
   id: number;
@@ -28,5 +29,9 @@ export default function Profile({ user }: { user: User }) {
       console.error("Error fetching data:", error);
     }
   };
-  return <div>selamat datang di halaman pemesanan</div>;
+  return (
+    <div>
+      <Pemesanan />
+    </div>
+  );
 }
