@@ -58,7 +58,7 @@ export default function Pemesanan() {
         produk: produkTerpilih,
       });
       alert("Pemesanan berhasil!");
-      router.push(`/tiket/detail?id=${response.data.newPemesanan.id}`);
+      router.push(`/profil`);
     } catch (error) {
       console.error("Gagal menyimpan pemesanan:", error);
       alert("Gagal menyimpan data pemesanan.");
@@ -70,12 +70,7 @@ export default function Pemesanan() {
       <h2 className="mb-16 text-xl font-bold text-center mt-10">Pemesanan</h2>
       <div className="px-2 mb-5 md:px-10">
         <div className="mb-6">
-          <div className="mb-10">
-            Cek pesanan Anda?{" "}
-            <span className="text-red-400">
-              <Link href="/tiket/cek">Cek Disini</Link>
-            </span>
-          </div>
+          
         </div>
 
         <form onSubmit={handleSubmit}>

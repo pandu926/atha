@@ -1,32 +1,67 @@
-import { signIn } from "@/auth";
+"use client";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 
-export default function Page() {
+export default function LoginPage() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const res = await signIn("credentials", {
+      username,
+      password,
+      redirect: false,
+    });
+    if (res?.error) {
+      alert("Login gagal! Periksa email atau password.");
+    } else {
+      window.location.href = "/admin"; // Redirect ke dashboard
+    }
+  };
+
   return (
-    <div className="flex justify-center items-center min-h-screen capitalize">
-      <div className="bg-white p-8 sm:p-10 md:p-16 rounded-lg  w-full max-w-3xl">
-        <h2 className="md:text-3xl text-2xl font-bold mb-20 text-center">
-          selamat datang kembali
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+      <div className="bg-white p-8 sm:p-10 md:p-16 rounded-lg shadow-lg w-full max-w-xl">
+        <h2 className="text-2xl md:text-3xl font-bold mb-8 text-center">
+          Selamat Datang Kembali
         </h2>
-        <div className="flex flex-col sm:flex-row space-x-0 sm:space-x-4 mb-8">
-          <form
-            action={async () => {
-              "use server";
-              await signIn("google");
-            }}
-          >
-            <button className="flex items-center justify-center w-full sm:w-auto py-3 px-5 border border-gray-300 rounded-md shadow-sm text-lg font-medium text-gray-700 bg-white hover:bg-gray-50 mb-4 sm:mb-0">
-              <Image
-                alt="Google logo"
-                src="/icon/google.png"
-                className="mr-3"
-                height={30}
-                width={30}
-              />
-              Masuk Dengan Google
-            </button>
-          </form>
-        </div>
+
+        {/* Google Login */}
+        <Button
+          onClick={() => signIn("google")}
+          className="flex items-center space-x-3 w-full justify-center bg-blue-600 text-white hover:bg-blue-700 mb-4"
+        >
+          <Image alt="Google logo" src="/icon/google.png" height={24} width={24} />
+          <span>Masuk Dengan Google</span>
+        </Button>
+
+        <div className="text-center text-gray-500 my-3">atau</div>
+
+        {/* Form Login Credential */}
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <Input
+            type="text"
+            placeholder="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+          />
+          <Input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+          <Button type="submit" className="w-full bg-gray-900 text-white hover:bg-gray-800">
+            Masuk
+          </Button>
+        </form>
       </div>
     </div>
   );

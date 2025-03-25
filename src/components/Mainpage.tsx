@@ -1,9 +1,13 @@
 "use client";
 import Image from "next/image";
 import { useState } from "react";
+import { Button } from "./ui/button";
+import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 const Mainpage = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { data: session } = useSession(); // Ambil data sesi pengguna
 
   return (
     <div className="bg-white text-black">
@@ -21,18 +25,23 @@ const Mainpage = () => {
 
         {/* Menu Desktop */}
         <nav className="md:flex space-x-6 font-bold hidden">
-          <a href="#" className="text-gray-600 hover:text-black">
+          <a href="#tentang" className="text-gray-600 hover:text-black">
             Tentang
           </a>
-          <a href="#" className="text-gray-600 hover:text-black">
+          <a href="#portofolio" className="text-gray-600 hover:text-black">
             Portofolio
           </a>
-          <a href="#" className="text-gray-600 hover:text-black">
+          <a href="#pemesanan" className="text-gray-600 hover:text-black">
             Pemesanan
           </a>
-          <a href="#" className="text-gray-600 hover:text-black">
+          <a href="#kontak" className="text-gray-600 hover:text-black">
             Kontak
           </a>
+          <Link href={session ? "/profil" : "/login"}>
+            <Button className="bg-[#6C2D2D]">
+              {session ? "Dashboard" : "Login"}
+            </Button>
+          </Link>
         </nav>
 
         {/* Menu Mobile */}
@@ -58,6 +67,11 @@ const Mainpage = () => {
             <a href="#" className="text-gray-600 hover:text-black">
               Kontak
             </a>
+            <Link href={session ? "/profil" : "/login"}>
+              <Button className="bg-[#6C2D2D]">
+                {session ? "Dashboard" : "Login"}
+              </Button>
+            </Link>
           </nav>
         )}
       </header>
